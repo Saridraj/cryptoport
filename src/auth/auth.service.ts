@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entity/user.entity';
 import { response } from 'express';
+import { PortfolioService } from 'src/portfolio/portfolio.service';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 // import { JwtService } from '@nestjs/jwt';
@@ -12,14 +13,18 @@ export class AuthService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    private portfolioService: PortfolioService,
   ) {}
 
   async register(user: User) {
     try {
-      const userVerify = await this.usersRepository.findOne({
+      //Validate existing user.
+      const existingUser = await this.usersRepository.findOne({
         where: [{ email: user.email }],
       });
-      if (!userVerify) {
+
+      //Save user data.
+      if (!existingUser) {
         const HashedPassword = await bcrypt.hash(user.password, 12);
         const newUser = await this.usersRepository.save({
           firstname: user.firstname,
@@ -28,7 +33,20 @@ export class AuthService {
           password: HashedPassword,
           registeredAt: Date(),
         });
-        return newUser;
+        const userId = newUser.id;
+        console.log(newUser.id);
+        if (newUser) {
+          //Connect to portfolio service to create portfolio of user.
+          const portfolio = await this.portfolioService.createPortfolio(userId);
+        }
+        const useInfo = {
+          id:newUser.id,
+          fisrtname:newUser.firstname,
+          lastname: newUser.lastname,
+          email: newUser.email,
+          registeredAt: newUser.registeredAt
+        }
+        return useInfo;
       } else if (user) {
         const status = response.status(422);
         const msg = (response.statusMessage =
@@ -41,35 +59,36 @@ export class AuthService {
   }
 
   async logIn(user: User) {
-    //Find user from database.
-    const UserAuthenticated = await this.usersRepository.findOne({
-      where: [{ email: user.email }],
-    });
+    try {
+      //Find user from database.
+      const UserAuthenticated = await this.usersRepository.findOne({
+        where: [{ email: user.email }],
+      });
 
-    //Compare password.
-    const doMatch = await bcrypt.compare( 
-      user.password,
-      UserAuthenticated.password,
-    );
+      //Compare password.
+      const doMatch = await bcrypt.compare(
+        user.password,
+        UserAuthenticated.password,
+      );
 
-    if (doMatch == false) {
-      const res = response.status(404);
-      return res;
-    } else if (doMatch == true) {
-      const UserAuthenticatedInfo = {
-        id: UserAuthenticated.id,
-        firstname: UserAuthenticated.firstname,
-        lastname: UserAuthenticated.lastname,
-        email: UserAuthenticated.email,
-        token: jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-          expiresIn: '15d',
-        }),
-      };
-      return UserAuthenticatedInfo;
-    } else {
-      const res = response.status(500);
-      return res;
+      if (doMatch == false) {
+        const res = response.status(404);
+        const msg = (response.statusMessage = 'Email or password invalid');
+        return res;
+      } else if (doMatch == true) {
+        const UserInfo = {
+          id: UserAuthenticated.id,
+          firstname: UserAuthenticated.firstname,
+          lastname: UserAuthenticated.lastname,
+          email: UserAuthenticated.email,
+          token: jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+            expiresIn: '30d',
+          }),
+        };
+        return UserInfo;
+      }
+    } catch (error) {
+      return error
     }
   }
-
 }

@@ -1,18 +1,18 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne } from 'typeorm';
 import { User } from './user.entity';
 
 @Entity()
 export class Portfolio {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+ 
+  @Column('simple-array')
+  cryptocurrencies: string[];
 
   @Column()
-  name: string;
+  userId: string; 
 
-  @Column('simple-json')
-  cryptocurrencies: { [key: string]: number };
-
-  @ManyToOne(type => User, user => user.portfolios, { eager: false })
-  user: User; 
+  @Column()
+  createdAt: string; 
 }
  

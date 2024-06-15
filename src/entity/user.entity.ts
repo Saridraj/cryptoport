@@ -1,10 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Portfolio } from './portfolio.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne } from 'typeorm';
+import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   firstname: string;
@@ -13,11 +13,15 @@ export class User {
   lastname: string;
 
   @Column()
+  @IsEmail()
   email: string;
 
   @Column()
+  @Length(6, 10)
   password: string; 
 
-  @OneToMany(type => Portfolio, portfolio => portfolio.user, { eager: true },)
-  portfolios: Portfolio[];
+
+  @Column()
+  registeredAt: string; 
+
 }
