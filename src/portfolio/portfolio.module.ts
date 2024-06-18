@@ -3,8 +3,9 @@ import { PortfolioController } from './portfolio.controller';
 import { PortfolioService } from './portfolio.service';
 import { Portfolio } from 'src/entity/portfolio.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { HttpModule } from '@nestjs/axios';
 @Module({
-  imports: [TypeOrmModule.forFeature([Portfolio])],
+  imports: [HttpModule,TypeOrmModule.forFeature([Portfolio])],
   controllers: [PortfolioController],
   providers: [PortfolioService],
 })

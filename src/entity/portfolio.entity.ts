@@ -6,8 +6,8 @@ export class Portfolio {
   @PrimaryGeneratedColumn('uuid')
   id: string;
  
-  @Column('simple-array')
-  cryptocurrencies: string[];
+  @Column("json")
+  cryptocurrencies: object;
 
   @Column()
   userId: string; 

@@ -10,9 +10,10 @@ import { typeOrmConfig } from './config/typeorm.config';
 import { PortfolioModule } from './portfolio/portfolio.module';
 
 @Module({
-  imports: [AuthModule,
+  imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot(typeOrmConfig),
+    AuthModule,
     PortfolioModule
   ],
   controllers: [AppController],
