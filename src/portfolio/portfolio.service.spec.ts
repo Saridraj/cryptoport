@@ -1,18 +1,53 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PortfolioService } from './portfolio.service';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Portfolio } from '../entity/portfolio.entity';
+import { Repository } from 'typeorm';
+import { HttpService } from '@nestjs/axios';
+import { HttpModule } from '@nestjs/axios';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { getRepositoryToken } from '@nestjs/typeorm';
 
 describe('PortfolioService', () => {
-  let service: PortfolioService;
-
+  let portfolioRepository: Repository<Portfolio>;
+  let portfolioService: PortfolioService;
+  let httpService: HttpService
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [PortfolioService],
+      providers: [
+        PortfolioService,
+        {
+          provide: getRepositoryToken(Portfolio),
+          useClass: Repository, // Mock repository class
+        },
+        {
+          provide: HttpService,
+          useValue: {
+            get: jest.fn(),
+          },
+        },
+      ],
     }).compile();
 
-    service = module.get<PortfolioService>(PortfolioService);
+    portfolioService = module.get<PortfolioService>(PortfolioService);
+    portfolioRepository = module.get<Repository<Portfolio>>(getRepositoryToken(Portfolio));
+    httpService = module.get<HttpService>(HttpService);
   });
 
   it('should be defined', () => {
-    expect(service).toBeDefined();
+    expect(portfolioService).toBeDefined();
   });
+
+  it('should create a portfolio', async () => {
+    // Mock repository save method
+    const mockPortfolio = new Portfolio();
+    mockPortfolio.userId = 'testUser';
+
+    jest.spyOn(portfolioRepository, 'save').mockResolvedValue(mockPortfolio);
+
+    const result = await portfolioService.createPortfolio('testUser');
+    expect(result).toEqual(mockPortfolio);
+  });
+  
 });

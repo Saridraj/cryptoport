@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Portfolio } from 'src/entity/portfolio.entity';
+import { Portfolio } from '../entity/portfolio.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
