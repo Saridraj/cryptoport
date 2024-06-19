@@ -3,10 +3,6 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
 import * as jwt from 'jsonwebtoken';
-import { AuthModule } from './../src/auth/auth.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
-import { PortfolioModule } from './../src/portfolio/portfolio.module';
 
 describe('E2E test', () => {
   let app: INestApplication;
