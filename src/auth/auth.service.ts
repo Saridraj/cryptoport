@@ -34,7 +34,6 @@ export class AuthService {
           registeredAt: Date(),
         });
         const userId = newUser.id;
-        console.log(newUser.id);
         if (newUser) {
           //Connect to portfolio service to create portfolio of user.
           const portfolio = await this.portfolioService.createPortfolio(userId);

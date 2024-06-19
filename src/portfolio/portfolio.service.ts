@@ -27,12 +27,9 @@ export class PortfolioService {
 
   async getOnePortfolio(userId: string) {
     try {
-      console.log(userId);
       const portfolio = await this.portfoliosRepository.findOne({
         where: [{ userId: userId }],
       });
-      console.log( portfolio )
-      //   const x = portfolio.cryptocurrencies[0].symbol
       const cryptocurrencies = Object.entries(portfolio.cryptocurrencies).map(
         ([key, value]) => {
           return { key: key, value: value };

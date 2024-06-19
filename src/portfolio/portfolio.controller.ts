@@ -9,7 +9,6 @@ export class PortfolioController {
   @Get(':id')
   @UseGuards(Authorize)
   async getUserPortfolio(@Param() data: string) {
-    console.log(data)
     const portfolio = await this.portfolioService.getOnePortfolio(data['id']);
     return portfolio ;
   }

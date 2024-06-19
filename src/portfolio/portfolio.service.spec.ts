@@ -41,57 +41,64 @@ describe('PortfolioService', () => {
     expect(portfolioService).toBeDefined();
   });
 
-  it('should create a portfolio', async () => {
-    const mockPortfolio = new Portfolio();
-    mockPortfolio.id = 'port-id';
-    mockPortfolio.cryptocurrencies = [];
-    mockPortfolio.userId = 'user-id';
-    mockPortfolio.createdAt = Date();
+  describe('createPortFolio', () => {
+    it('should create a portfolio', async () => {
+      const mockPortfolio = new Portfolio();
+      mockPortfolio.id = 'port-id';
+      mockPortfolio.cryptocurrencies = [];
+      mockPortfolio.userId = 'user-id';
+      mockPortfolio.createdAt = Date();
 
-    jest.spyOn(portfolioRepository, 'save').mockResolvedValue(mockPortfolio);
+      jest.spyOn(portfolioRepository, 'save').mockResolvedValue(mockPortfolio);
 
-    const result = await portfolioService.createPortfolio('testUser');
-    expect(result).toEqual(mockPortfolio);
+      const result = await portfolioService.createPortfolio('testUser');
+      expect(result).toEqual(mockPortfolio);
+    });
   });
 
-  it('should get user portfolio', async () => {
-    const userId = 'user-id';
-    const mockPortfolio = new Portfolio();
-    mockPortfolio.id = 'port-id';
-    mockPortfolio.cryptocurrencies = [{ symbol: 'zoc' }, { symbol: 'ome' }];
-    mockPortfolio.userId = userId;
-    mockPortfolio.createdAt = Date();
+  describe('getOnePortFolio', () => {
 
-    const cryptocurrencies = [
-      { key: '0', value: { symbol: 'zoc' } },
-      { key: '1', value: { symbol: 'ome' } },
-    ];
-    const coingeckoResponse = [
-      {
-        logo: 'https://s2.coinmarketcap.com/static/img/coins/64x64/4546.png',
-        name: '01coin',
-        price_BTC: '0.000000007000',
-        P_L_24h: -0.40437866,
-      },
-      {
-        logo: 'https://s2.coinmarketcap.com/static/img/coins/64x64/19546.png',
-        name: 'o-mee',
-        price_BTC: '0.000000000943',
-        P_L_24h: -6.23230259,
-      },
-    ];
+    it('should get user portfolio', async () => {
+      const userId = 'user-id';
+      const mockPortfolio = new Portfolio();
+      mockPortfolio.id = 'port-id';
+      mockPortfolio.cryptocurrencies = [{ symbol: 'zoc' }, { symbol: 'ome' }];
+      mockPortfolio.userId = userId;
+      mockPortfolio.createdAt = Date();
 
-    jest.spyOn(portfolioRepository, 'findOne').mockResolvedValue(mockPortfolio);
-    jest
-      .spyOn(cryptoDataService, 'coingeckoProvider')
-      .mockResolvedValue(coingeckoResponse);
-    const result = await portfolioService.getOnePortfolio(userId);
-    expect(result).toEqual(coingeckoResponse);
-    expect(portfolioRepository.findOne).toHaveBeenCalledWith({
-      where: [{ userId: userId }],
+      const cryptocurrencies = [
+        { key: '0', value: { symbol: 'zoc' } },
+        { key: '1', value: { symbol: 'ome' } },
+      ];
+      const coingeckoResponse = [
+        {
+          logo: 'https://s2.coinmarketcap.com/static/img/coins/64x64/4546.png',
+          name: '01coin',
+          price_BTC: '0.000000007000',
+          P_L_24h: -0.40437866,
+        },
+        {
+          logo: 'https://s2.coinmarketcap.com/static/img/coins/64x64/19546.png',
+          name: 'o-mee',
+          price_BTC: '0.000000000943',
+          P_L_24h: -6.23230259,
+        },
+      ];
+
+      jest
+        .spyOn(portfolioRepository, 'findOne')
+        .mockResolvedValue(mockPortfolio);
+      jest
+        .spyOn(cryptoDataService, 'coingeckoProvider')
+        .mockResolvedValue(coingeckoResponse);
+      const result = await portfolioService.getOnePortfolio(userId);
+      expect(result).toEqual(coingeckoResponse);
+      expect(portfolioRepository.findOne).toHaveBeenCalledWith({
+        where: [{ userId: userId }],
+      });
+      expect(cryptoDataService.coingeckoProvider).toHaveBeenCalledWith(
+        cryptocurrencies,
+      );
     });
-    expect(cryptoDataService.coingeckoProvider).toHaveBeenCalledWith(
-      cryptocurrencies,
-    );
   });
 });

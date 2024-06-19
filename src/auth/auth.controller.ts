@@ -11,7 +11,6 @@ export class AuthController {
   async register(@Body() user: User) {
     const register = await this.authService.register(user);
     return register;
-    //console.log(user);
   }
 
   @Post('logIn')
@@ -20,16 +19,4 @@ export class AuthController {
     return logInUser;
   }
 
-//   @Get('getAllUserData')
-//   // @UseGuards(Authorize)
-//   async getAllUserData() {
-//     const user = await this.authService.getAllUserData();
-//     return user;
-//   }
-
-//   @Get('getOneUserData')
-//   async getOneUserData(@Body() id: string) {
-//     const user = await this.authService.getOneUserData(id);
-//     return user;
-//   }
 }

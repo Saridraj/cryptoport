@@ -5,10 +5,10 @@ import { CryptoDataService } from './crypto-data.service';
 export class CryptoDataController {
   constructor(private cryptoDataService: CryptoDataService) {}
 
-  @Get()
-  async getCoinsList(@Body() data:string[]) {
-    console.log("ctl: ",data['provider'])
-    const coins = await this.cryptoDataService. getCoinsList(data['provider']);
-    return coins;
-  }
+  // @Get()
+  // async getCoinsList(@Body() data:string[]) {
+  //   console.log("ctl: ",data['provider'])
+  //   const coins = await this.cryptoDataService.getCoinsList(data['provider']);
+  //   return coins;
+  // }
 }

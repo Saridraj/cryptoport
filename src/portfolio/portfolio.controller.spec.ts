@@ -62,7 +62,6 @@ describe('PortfolioController', () => {
     const userId = 'user123';
     jest.spyOn(portfolioService, 'getOnePortfolio').mockResolvedValue(portfolioData);
     const result = await portfolioController.getUserPortfolio(userId);
-    console.log(result)
     expect(result).toEqual(portfolioData);
   });
 });
