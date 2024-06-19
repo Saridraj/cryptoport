@@ -52,9 +52,6 @@ describe('E2E test', () => {
   describe('GET: portfolio', () => {
     it('should return OK', async () => {
       const userId = '221378cc-b519-48ee-af75-331856dfba35';
-      const config = {
-        headers: {},
-      };
       await request(app.getHttpServer())
         .get(`/portfolio/${userId}`)
         .set('Authorization', `Bearer ${authToken}`)
