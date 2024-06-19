@@ -7,6 +7,7 @@ import { User } from 'src/entity/user.entity';
 import { Portfolio } from 'src/entity/portfolio.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { HttpModule } from '@nestjs/axios';
+import { CryptoDataService } from 'src/crypto-data/crypto-data.service';
 // import { JwtStrategy } from './jwt.strategy';
 
 @Module({
@@ -15,6 +16,6 @@ import { HttpModule } from '@nestjs/axios';
     TypeOrmModule.forFeature([User, Portfolio ]),
   ],
   controllers: [AuthController],
-  providers: [AuthService,PortfolioService]
+  providers: [AuthService,PortfolioService, CryptoDataService]
 })
 export class AuthModule {}

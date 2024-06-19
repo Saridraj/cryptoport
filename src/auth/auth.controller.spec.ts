@@ -1,12 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { HttpService } from '@nestjs/axios';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { PortfolioService } from '../portfolio/portfolio.service';
+import { CryptoDataService } from '../crypto-data/crypto-data.service';
 import { User } from '../entity/user.entity';
 import { Portfolio } from '../entity/portfolio.entity';
-import { HttpService } from '@nestjs/axios';
+
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -17,6 +19,7 @@ describe('AuthController', () => {
       providers: [
         AuthService,
         PortfolioService,
+        CryptoDataService ,
         {
           provide: getRepositoryToken(User),
           useClass: Repository, // Mock repository class

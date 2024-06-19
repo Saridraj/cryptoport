@@ -1,10 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { HttpService } from '@nestjs/axios';
 import { CryptoDataController } from './crypto-data.controller';
 import { CryptoDataService } from './crypto-data.service';
-import { HttpService } from '@nestjs/axios';
 import { Portfolio } from '../entity/portfolio.entity';
-import { Repository } from 'typeorm';
-import { getRepositoryToken } from '@nestjs/typeorm';
+
+
 describe('CryptoDataController', () => {
   let controller: CryptoDataController;
 
