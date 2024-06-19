@@ -1,5 +1,5 @@
 import { Controller, Post, Get, Body, UseGuards } from '@nestjs/common';
-import { User } from 'src/entity/user.entity';
+import { User } from '../entity/user.entity';
 import { AuthService } from './auth.service';
 // import { Authorize } from 'src/authorize.guard'
 

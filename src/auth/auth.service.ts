@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/entity/user.entity';
+import { User } from '../entity/user.entity';
 import { response } from 'express';
-import { PortfolioService } from 'src/portfolio/portfolio.service';
+import { PortfolioService } from '../portfolio/portfolio.service';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 // import { JwtService } from '@nestjs/jwt';
