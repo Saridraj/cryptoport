@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { PortfolioService } from 'src/portfolio/portfolio.service';
+import { PortfolioService } from '../portfolio/portfolio.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from 'src/entity/user.entity';
-import { Portfolio } from 'src/entity/portfolio.entity';
+import { User } from '../entity/user.entity';
+import { Portfolio } from '../entity/portfolio.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { HttpModule } from '@nestjs/axios';
-import { CryptoDataService } from 'src/crypto-data/crypto-data.service';
+import { CryptoDataService } from '../crypto-data/crypto-data.service';
 // import { JwtStrategy } from './jwt.strategy';
 
 @Module({
