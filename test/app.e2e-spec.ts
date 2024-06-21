@@ -15,9 +15,9 @@ describe('E2E test', () => {
       {
         expiresIn: '30d',
       },
-    );
+    ); 
     return token;
-  }
+  } 
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({

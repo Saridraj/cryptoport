@@ -6,9 +6,10 @@ export class CryptoDataController {
   constructor(private cryptoDataService: CryptoDataService) {}
 
   // @Get()
-  // async getCoinsList(@Body() data:string[]) {
-  //   console.log("ctl: ",data['provider'])
-  //   const coins = await this.cryptoDataService.getCoinsList(data['provider']);
+  // async getCoinsMarket() {
+  //   console.log("called")
+  //   const coins = await this.cryptoDataService.getCoinsMarket();
+  //   console.log("controller: ",coins)
   //   return coins;
   // }
 }
