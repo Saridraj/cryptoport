@@ -1,0 +1,114 @@
+# # docker-compose.yml
+
+# version: '3.8'
+
+# services:
+#   app:
+#     build: .
+#     container_name: cryptoport-be
+#     ports:
+#       - "4000:4000"
+#     env_file:
+#       - .env 
+#     depends_on:
+#       - db
+#     networks:
+#       - my-network
+
+#   db:
+#     image: mysql:8.0
+#     container_name: mysql-db
+#     ports:
+#       - "3306:3306"
+#     environment:
+#       MYSQL_DATABASE: 'kryptodian'
+#       # So you don't have to use root, but you can if you like
+#       MYSQL_USER: 'root'
+#       # You can use whatever password you like
+#       MYSQL_PASSWORD: 'admin123456'
+#       # Password for root access
+#       MYSQL_ROOT_PASSWORD: 'admin123456'
+#     expose:
+#       # Opens port 3306 on the container
+#       - '3306'
+#     volumes:
+#       - db_data:/var/lib/mysql
+#     networks:
+#       - my-network
+
+# networks:
+#   my-network:
+
+# volumes:
+#   db_data:
+
+services:
+  app:
+    build: .
+    container_name: cryptoport-be
+    ports:
+      - "4000:4000"
+    env_file:
+      - .env 
+    # environment:      
+    #   - DATABASE_HOST=db   
+    #   - DATABASE_PORT=3306      
+    #   - DATABASE_USER=root      
+    #   - DATABASE_PASSWORD=admin123456    
+    #   - DATABASE_NAME=kryptodian
+    depends_on:
+      - db
+    networks:
+      - kryptodian-network
+  db:
+    image: mysql:8.0
+    cap_add:
+      - SYS_NICE
+    restart: always
+    env_file:
+      - .env 
+    environment:      
+      MYSQL_ROOT_PASSWORD: admin123456   
+      MYSQL_DATABASE: kryptodian 
+      MYSQL_USER: root      
+      MYSQL_PASSWORD: admin123456
+    ports:
+      - '3306:3306'
+    volumes:
+      - db:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - kryptodian-network
+
+  unit-tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    container_name: unit-tests
+    environment:
+      - NODE_ENV=test
+    depends_on:
+      - db
+    networks:
+      - kryptodian-network
+    command: ["npm", "run", "test"]
+    
+  e2e-tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    container_name: e2e-tests
+    environment:
+      - NODE_ENV=test
+    depends_on:
+      - db
+    networks:
+      - kryptodian-network
+    command: ["npm", "run", "test:e2e"]
+
+networks:
+  kryptodian-network:
+    driver: bridge
+
+volumes:
+  db:
