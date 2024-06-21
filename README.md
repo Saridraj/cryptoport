@@ -45,7 +45,7 @@ $ DATABASE_NAME
 ### Docker
 - Make sure Docker starts on your local device.
 
-### Running the app
+### Running the app in PORT 4000
 ```bash
 $ docker-compose up --build
 ```
