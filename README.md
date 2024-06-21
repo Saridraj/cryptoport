@@ -25,7 +25,7 @@ All API have details are follows [API Documentation](https://documenter.getpostm
 
 ### .env 
 - Create file name .env in the project.
-- Add environment variable which consist of 
+- Add environment variable that consist of 
 ```bash
 $ JWT_SECRET
 $ DATA_PROVIDER
@@ -49,11 +49,12 @@ $ DATABASE_NAME
 ```bash
 $ docker-compose up --build
 ```
-### Project Testing
+### Project testing
 ```bash
 $ docker-compose up --build unit-tests
 $ docker-compose up --build e2e-tests
 ```
-### Database Example
-- 
+### Database example
+- The file name kryptodian_user.sql and kryptodian_portfolio.sql is the example of user data and portfolio of each user data in SQL format. You can use it import to your database for any data usage.
+- One user in example can sign in with email:user1@gmail.com and pass:123456
 
