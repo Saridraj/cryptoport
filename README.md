@@ -16,7 +16,7 @@ The Cryptoport backend system is an application that operates on the backend of 
       (2) Log In: This endpoint handles user log-in with a POST request at /auth/logIn.
       (3) getPortfolio: This endpoint provide user portfolio with a GET request at /portfolio/:userId.
       
-All API have details are follows [alt API Documentation](https://documenter.getpostman.com/view/19296288/2sA3XTfLKb) .
+All API have details are follows ![alt API Documentation](https://documenter.getpostman.com/view/19296288/2sA3XTfLKb) .
 ## 3. Project Setup
 
 ## 4. Project Testing
