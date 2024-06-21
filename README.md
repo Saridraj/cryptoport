@@ -7,7 +7,8 @@ The Cryptoport backend system is an application that operates on the backend of 
       (1) Auth Module includes the AuthModule, AuthController, and AuthService classes. It manages two entities, User and Portfolio, and supports two operations: register() and logIn().
       (2) Portfolio Module includes the PortfolioModule, PortfolioController, and PortfolioService classes. And it manages Portfolio entities. It have two operations are createPortfolio and getUserPortfolio().
       (3) Crypto Data Module includes the CryptoDataModule, CryptoDataController, and CryptoDataService classes. This module handles fetching data from the crypto API provider.
-
+    follow in this class diagram. ![alt text](https://res.cloudinary.com/dmdxfjunb/image/upload/v1718969121/kryptodian_eavtbh.jpg)
+ 
 ## 2. API Documentation
 
 ## 3. Project Setup
