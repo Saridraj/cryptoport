@@ -58,3 +58,4 @@ $ docker-compose up --build e2e-tests
 - The file name kryptodian_user.sql and kryptodian_portfolio.sql is the example of user data and portfolio of each user data in SQL format. You can use it import to your database for any data usage.
 - One user in example can sign in with email:user1@gmail.com and pass:123456
 
+ 

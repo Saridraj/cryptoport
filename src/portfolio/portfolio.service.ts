@@ -22,7 +22,7 @@ export class PortfolioService {
       return newPort;
     } catch (error) {
       return error;
-    }
+    } 
   }
 
   async getOnePortfolio(userId: string) {
